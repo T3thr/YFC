@@ -14,7 +14,7 @@ export default function SignInPage() {
       // Successful login
       localStorage.setItem('isLoggedIn', JSON.stringify(true));
       // Redirect to homepage
-      window.location.href = '/';
+      window.location.replace('/');
     } else {
       // Handle login failure
       console.error('Invalid credentials');

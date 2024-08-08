@@ -28,7 +28,7 @@ export default function HomePage() {
   const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
-    window.location.href = '/';
+    window.location.replace('/');
   };
 
   const addToCart = (item) => {
