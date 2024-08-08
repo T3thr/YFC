@@ -86,7 +86,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
               <Image
-                src="/menu1.jpg"
+                src="https://ik.imagekit.io/kaitung/menu1.jpg?updatedAt=1723118105270"
                 width={300}
                 height={300}
               />
@@ -102,7 +102,8 @@ export default function HomePage() {
             </div>
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
               <Image
-                src="menu2.jpg"
+                class name="w-[300px] h-auto"
+                src="https://ik.imagekit.io/kaitung/menu2.jpg?updatedAt=1723118988929"
                 width={300}
                 height={300}
               />
