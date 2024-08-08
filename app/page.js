@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image'
 import Link from 'next/link';
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -69,7 +70,12 @@ export default function HomePage() {
           <h3 className="text-2xl font-semibold text-gray-800 mb-6">เมนูแนะนำ</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-              <img className="w-full h-56 object-cover object-center" src="https://via.placeholder.com/300" alt="Product 1" />
+              <Image
+                src="https://s3.amazonaws.com/my-bucket/profile.png"
+                width={300}
+                height={300}
+                alt="P1"
+              />
               <div className="p-4">
                 <h4 className="text-lg font-semibold text-gray-800">ไก่บูด 1</h4>
                 <p className="text-gray-600 mt-2">$100.00</p>
@@ -81,7 +87,12 @@ export default function HomePage() {
               </div>
             </div>
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-              <img className="w-full h-56 object-cover object-center" src="https://via.placeholder.com/300" alt="Product 2" />
+              <Image
+                src="/app/menu2.png"
+                width={300}
+                height={300}
+                alt="P1"
+              />
               <div className="p-4">
                 <h4 className="text-lg font-semibold text-gray-800">ไก่บูด 2</h4>
                 <p className="text-gray-600 mt-2">$200.00</p>
