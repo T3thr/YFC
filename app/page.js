@@ -10,6 +10,7 @@ import "./globals.css";
 export default function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [redirect, setredirect] = useState(false);
 
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
@@ -29,8 +30,11 @@ export default function HomePage() {
   const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
-    window.location.href = '/';
+    setredirect(true);
   };
+  if (redirect) {
+    return <RedirectHome />;
+  }
 
   const addToCart = (item) => {
     const existingItem = cartItems.find(cartItem => cartItem.name === item.name);
@@ -85,7 +89,6 @@ export default function HomePage() {
                 src="/menu1.jpg"
                 width={300}
                 height={300}
-                alt="P1"
               />
               <div className="p-4">
                 <h4 className="text-lg font-semibold text-gray-800">ไก่บูด 1</h4>
@@ -102,7 +105,6 @@ export default function HomePage() {
                 src="menu2.jpg"
                 width={300}
                 height={300}
-                alt="P2"
               />
               <div className="p-4">
                 <h4 className="text-lg font-semibold text-gray-800">ไก่บูด 2</h4>

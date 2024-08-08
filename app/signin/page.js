@@ -24,6 +24,10 @@ export default function SignInPage() {
     }
   };
 
+  if (redirect) {
+    return <RedirectHome />;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>

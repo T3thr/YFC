@@ -1,4 +1,4 @@
-// app/components/RedirectHome.jsx
+// components/RedirectHome.jsx
 
 'use client'
 
@@ -9,7 +9,7 @@ export default function RedirectHome() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/'); // Adjust this to your actual home page path
+    router.push('/'); // Adjust the path to your actual HomePage route
   }, [router]);
 
   return null; // This component does not render anything
