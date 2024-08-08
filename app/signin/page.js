@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import styles from './SignInPage.module.css';
 
@@ -8,13 +9,14 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
+    const router = useRouter();
     e.preventDefault();
     // Replace this with your actual authentication logic
     if (username === '123' && password === '123') {
       // Successful login
       localStorage.setItem('isLoggedIn', JSON.stringify(true));
       // Redirect to homepage
-      window.location.replace('/');
+      router.push('/');
     } else {
       // Handle login failure
       console.error('Invalid credentials');

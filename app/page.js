@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image'
 import Link from 'next/link';
@@ -28,7 +29,7 @@ export default function HomePage() {
   const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
-    window.location.replace('/');
+    router.push('/');
   };
 
   const addToCart = (item) => {
@@ -81,7 +82,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
               <Image
-                src="https://via.placeholder.com/300"
+                src="/menu1.jpg"
                 width={300}
                 height={300}
                 alt="P1"
@@ -98,7 +99,7 @@ export default function HomePage() {
             </div>
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
               <Image
-                src="https://via.placeholder.com/300"
+                src="menu2.jpg"
                 width={300}
                 height={300}
                 alt="P2"
