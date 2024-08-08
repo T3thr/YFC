@@ -21,6 +21,10 @@ export default function HomePage() {
     }
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
+
   const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
@@ -28,9 +32,15 @@ export default function HomePage() {
   };
 
   const addToCart = (item) => {
-    setCartItems([...cartItems, item]);
+    const existingItem = cartItems.find(cartItem => cartItem.name === item.name);
+    if (existingItem) {
+      setCartItems(cartItems.map(cartItem =>
+        cartItem.name === item.name ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
+      ));
+    } else {
+      setCartItems([...cartItems, { ...item, quantity: 1 }]);
+    }
   };
-
 
   return (
     <div className="flex flex-col bg-grey-100">
@@ -46,7 +56,7 @@ export default function HomePage() {
                 <Link href="/profile">Profile</Link>
               </li>
               <li className="hover:ring-1 hover:ring-blue-400 text-blue-600 rounded-sm py-2 px-3 m-2 text-center">
-                <Link href="/cart">Cart ({cartItems.length})</Link>
+                <Link href="/cart">Cart ({cartItems.reduce((acc, item) => acc + item.quantity, 0)})</Link>
               </li>
               <li className="hover:ring-1 hover:ring-blue-400 text-blue-600 rounded-sm py-2 px-3 m-2 text-center">
                 {isLoggedIn ? (
@@ -71,7 +81,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
               <Image
-                src="https://s3.amazonaws.com/my-bucket/profile.png"
+                src="https://via.placeholder.com/300"
                 width={300}
                 height={300}
                 alt="P1"
@@ -88,10 +98,10 @@ export default function HomePage() {
             </div>
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
               <Image
-                src="/app/menu2.png"
+                src="https://via.placeholder.com/300"
                 width={300}
                 height={300}
-                alt="P1"
+                alt="P2"
               />
               <div className="p-4">
                 <h4 className="text-lg font-semibold text-gray-800">ไก่บูด 2</h4>
@@ -108,5 +118,5 @@ export default function HomePage() {
         </section>
       </main>
     </div>
-  )
-};
+  );
+}
