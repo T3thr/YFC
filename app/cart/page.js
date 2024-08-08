@@ -1,5 +1,6 @@
 'use client'
 
+import RedirectHome from '@/components/RedirectHome';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import "/app/globals.css";

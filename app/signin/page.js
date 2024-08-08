@@ -1,13 +1,13 @@
 'use client'
 
-import { useRouter } from 'next/navigation';
+import RedirectHome from '@/components/RedirectHome';
 import { useState } from 'react';
 import styles from './SignInPage.module.css';
 
 export default function SignInPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); // Call useRouter at the top level
+  const [redirect, setRedirect] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,10 +16,11 @@ export default function SignInPage() {
       // Successful login
       localStorage.setItem('isLoggedIn', JSON.stringify(true));
       // Redirect to homepage
-      router.push('/');
+      setRedirect(true);
     } else {
       // Handle login failure
       console.error('Invalid credentials');
+
     }
   };
 

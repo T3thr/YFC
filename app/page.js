@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/router';
+import RedirectHome from '@/components/RedirectHome';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image'
 import Link from 'next/link';
@@ -10,7 +10,6 @@ import "./globals.css";
 export default function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const router = useRouter(); // Call useRouter at the top level
 
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
@@ -30,7 +29,7 @@ export default function HomePage() {
   const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
-    router.push('/');
+    window.location.href = '/';
   };
 
   const addToCart = (item) => {
