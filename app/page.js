@@ -10,6 +10,7 @@ import "./globals.css";
 export default function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const router = useRouter(); // Call useRouter at the top level
 
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn');

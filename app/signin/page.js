@@ -7,9 +7,9 @@ import styles from './SignInPage.module.css';
 export default function SignInPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter(); // Call useRouter at the top level
 
   const handleSubmit = (e) => {
-    const router = useRouter();
     e.preventDefault();
     // Replace this with your actual authentication logic
     if (username === '123' && password === '123') {
