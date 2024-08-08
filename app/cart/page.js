@@ -122,18 +122,6 @@ export default function CartPage() {
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-1 gap-6">
-            {cartItems.length === 0 ? (
-              <p className="text-center text-gray-600">Your cart is empty</p>
-            ) : (
-              cartItems.map((item, index) => (
-                <div key={index} className="bg-white shadow-lg rounded-lg overflow-hidden p-4">
-                  <h4 className="text-lg font-semibold text-gray-800">{item.name}</h4>
-                  <p className="text-gray-600 mt-2">${item.price.toFixed(2)}</p>
-                </div>
-              ))
-            )}
-          </div>
               <div className="mt-8 text-right">
                 <p className="text-2xl font-semibold text-gray-800">Total: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</p>
                 <button className="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
