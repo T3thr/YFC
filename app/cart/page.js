@@ -8,6 +8,8 @@ import "/app/globals.css";
 export default function CartPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [redirect, setRedirect] = useState(false);
+  const [showLoginPopup, setShowLoginPopup] = useState(false); // New state for the login popup
 
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
@@ -15,14 +17,14 @@ export default function CartPage() {
     if (storedIsLoggedIn) {
       setIsLoggedIn(JSON.parse(storedIsLoggedIn));   
     }
-    if (storedCartItems) {
+    if (storedCartItems && JSON.parse(storedIsLoggedIn)) {
       setCartItems(JSON.parse(storedCartItems));
     }
   }, []);
 
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems]);
+  }, [cartItems, isLoggedIn]);
 
   const updateQuantity = (name, quantity) => {
     if (quantity <= 0) {
@@ -39,6 +41,18 @@ export default function CartPage() {
     const updatedCartItems = cartItems.filter(item => item.name !== name);
     setCartItems(updatedCartItems);
   };
+
+  const handleSignOut = () => {
+    // Store the cart items before sign out
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    localStorage.removeItem('isLoggedIn');
+    setIsLoggedIn(false);
+    setRedirect(true); // Trigger redirection
+  };
+  
+  if (redirect) {
+    return <RedirectHome />; // Ensure this is only triggered once
+  }
 
   return (
     <div className="flex flex-col bg-grey-100">
