@@ -13,16 +13,6 @@ export default function HomePage() {
   const [redirect, setRedirect] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false); // New state for the login popup
 
-  const handleSignOut = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem('isLoggedIn');
-    setRedirect(true); // This triggers the redirection
-  };
-  
-  if (redirect) {
-    return <RedirectHome />; // Ensure this is only triggered once
-  }
-
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
     const storedCartItems = localStorage.getItem('cartItems');
@@ -37,6 +27,16 @@ export default function HomePage() {
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
+
+  const handleSignOut = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
+    setRedirect(true); // This triggers the redirection
+  };
+  
+  if (redirect) {
+    return <RedirectHome />; // Ensure this is only triggered once
+  }
 
   const addToCart = (item) => {
     if (!isLoggedIn) {
