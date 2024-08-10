@@ -29,9 +29,11 @@ export default function HomePage() {
   }, [cartItems, isLoggedIn]);
 
   const handleSignOut = () => {
-    setIsLoggedIn(false);
+    // Store the cart items before sign out
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
     localStorage.removeItem('isLoggedIn');
-    setRedirect(true); // This triggers the redirection
+    setIsLoggedIn(false);
+    setRedirect(true); // Trigger redirection
   };
   
   if (redirect) {
