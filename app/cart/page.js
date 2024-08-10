@@ -60,6 +60,13 @@ export default function CartPage() {
                   <Link href="/">Sign In</Link>
                 )}
               </li>
+              <li className="hover:ring-1 hover:ring-blue-400 text-blue-600 rounded-sm py-2 px-3 m-2 text-center">
+                {isLoggedIn ? (
+                  <button onClick={handleSignOut} className="text-blue-600">Sign Out</button>
+                ) : (
+                  <Link href="/signin">Sign In</Link>
+                )}
+              </li>
             </ul>
           </nav>
         </div>
