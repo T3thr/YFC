@@ -10,7 +10,18 @@ import "./globals.css";
 export default function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const [redirect, setredirect] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+  const [showLoginPopup, setShowLoginPopup] = useState(false); // New state for the login popup
+
+  const handleSignOut = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
+    setRedirect(true); // This triggers the redirection
+  };
+  
+  if (redirect) {
+    return <RedirectHome />; // Ensure this is only triggered once
+  }
 
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
@@ -27,16 +38,12 @@ export default function HomePage() {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const handleSignOut = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem('isLoggedIn');
-    setredirect(true);
-  };
-  if (redirect) {
-    return <RedirectHome />;
-  }
-
   const addToCart = (item) => {
+    if (!isLoggedIn) {
+      setShowLoginPopup(true); // Show login popup if not logged in
+      return;
+    }
+
     const existingItem = cartItems.find(cartItem => cartItem.name === item.name);
     if (existingItem) {
       setCartItems(cartItems.map(cartItem =>
@@ -45,6 +52,10 @@ export default function HomePage() {
     } else {
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
     }
+  };
+
+  const closePopup = () => {
+    setShowLoginPopup(false);
   };
 
   return (
@@ -121,6 +132,17 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+      {showLoginPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold mb-4">Please Sign In</h2>
+            <p className="mb-4">You need to sign in to add items to the cart.</p>
+            <button onClick={closePopup} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

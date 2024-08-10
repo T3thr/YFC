@@ -25,7 +25,7 @@ export default function SignInPage() {
   };
 
   if (redirect) {
-    return <RedirectHome />;
+    return <RedirectHome />; // Ensure this is only triggered once
   }
 
   return (
