@@ -31,6 +31,7 @@ export default function HomePage() {
   const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
+    setCartItems([]); // Clear cart items on sign out
     setRedirect(true); // This triggers the redirection
   };
   
@@ -70,6 +71,13 @@ export default function HomePage() {
               </li>
               <li className="hover:ring-1 hover:ring-blue-400 text-blue-600 rounded-sm py-2 px-3 m-2 text-center">
                 <Link href="/profile">Profile</Link>
+              </li>
+              <li className="hover:ring-1 hover:ring-blue-400 text-blue-600 rounded-sm py-2 px-3 m-2 text-center">
+                {isLoggedIn && (
+                  <Link href="/cart">
+                    Cart ({cartItems.reduce((acc, item) => acc + item.quantity, 0)})
+                  </Link>
+                )}
               </li>
               <li className="hover:ring-1 hover:ring-blue-400 text-blue-600 rounded-sm py-2 px-3 m-2 text-center">
                 <Link href="/cart">Cart ({cartItems.reduce((acc, item) => acc + item.quantity, 0)})</Link>

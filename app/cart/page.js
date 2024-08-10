@@ -24,15 +24,19 @@ export default function CartPage() {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const updateQuantity = (index, quantity) => {
-    const updatedCartItems = cartItems.map((item, i) => 
-      i === index ? { ...item, quantity: quantity } : item
-    );
-    setCartItems(updatedCartItems);
+  const updateQuantity = (name, quantity) => {
+    if (quantity <= 0) {
+      removeItem(name);
+    } else {
+      const updatedCartItems = cartItems.map(item =>
+        item.name === name ? { ...item, quantity: quantity } : item
+      );
+      setCartItems(updatedCartItems);
+    }
   };
 
-  const removeItem = (index) => {
-    const updatedCartItems = cartItems.filter((_, i) => i !== index);
+  const removeItem = (name) => {
+    const updatedCartItems = cartItems.filter(item => item.name !== name);
     setCartItems(updatedCartItems);
   };
 
@@ -93,9 +97,8 @@ export default function CartPage() {
             </section>
           ) : (
             <section>
-              
               <div className="grid grid-cols-1 gap-6">
-                {cartItems.map(item => (
+                {cartItems.map((item, index) => (
                   <div key={item.name} className="bg-white shadow-lg rounded-lg overflow-hidden flex items-center">
                     <div className="p-4 flex-grow">
                       <h4 className="text-lg font-semibold text-gray-800">{item.name}</h4>
