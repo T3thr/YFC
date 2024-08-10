@@ -26,7 +26,6 @@ export default function RedirectHome() {
   }, [cartItems, isLoggedIn]);
 
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
     router.replace('/'); // Replace the current entry with HomePage, avoiding re-renders
   }, [router]);
 
