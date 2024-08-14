@@ -1,32 +1,10 @@
-'use client'
+'use client';
 
 import RedirectHome from '@/components/RedirectHome';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-// Mock API call functions
-async function saveCartItems(cartItems) {
-  // Send cartItems to server to save
-  await fetch('/api/saveCartItems', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(cartItems),
-  });
-}
-
-async function fetchCartItems() {
-  // Fetch cartItems from server
-  const response = await fetch('/api/getCartItems');
-  if (response.ok) {
-    return await response.json();
-  }
-  return [];
-}
 
 export default function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,31 +14,33 @@ export default function HomePage() {
 
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
+    const storedCartItems = localStorage.getItem('cartItems');
     if (storedIsLoggedIn) {
       setIsLoggedIn(JSON.parse(storedIsLoggedIn));
-      fetchCartItems().then(setCartItems);
+    }
+    if (storedCartItems && JSON.parse(storedIsLoggedIn)) {
+      setCartItems(JSON.parse(storedCartItems));
     }
   }, []);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      saveCartItems(cartItems); // Save cart items to the server
-    }
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems, isLoggedIn]);
 
   const handleSignOut = () => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
     localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
-    setRedirect(true); // Trigger redirection
+    setRedirect(true);
   };
-  
+
   if (redirect) {
-    return <RedirectHome />; // Ensure this is only triggered once
+    return <RedirectHome />;
   }
 
   const addToCart = (item) => {
     if (!isLoggedIn) {
-      setShowLoginPopup(true); // Show login popup if not logged in
+      setShowLoginPopup(true);
       return;
     }
 
