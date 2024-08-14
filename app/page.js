@@ -32,6 +32,7 @@ export default function HomePage() {
     // Store the cart items before sign out
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     localStorage.removeItem('isLoggedIn');
+    setCartItems([]);
     setIsLoggedIn(false);
     setRedirect(true); // Trigger redirection
   };
