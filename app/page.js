@@ -2,37 +2,54 @@
 
 import RedirectHome from '@/components/RedirectHome';
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image'
+import Image from 'next/image';
 import Link from 'next/link';
 import { Inter } from "next/font/google";
 import "./globals.css";
+
+// Mock API call functions
+async function saveCartItems(cartItems) {
+  // Send cartItems to server to save
+  await fetch('/api/saveCartItems', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(cartItems),
+  });
+}
+
+async function fetchCartItems() {
+  // Fetch cartItems from server
+  const response = await fetch('/api/getCartItems');
+  if (response.ok) {
+    return await response.json();
+  }
+  return [];
+}
 
 export default function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [redirect, setRedirect] = useState(false);
-  const [showLoginPopup, setShowLoginPopup] = useState(false); // New state for the login popup
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
-    const storedCartItems = localStorage.getItem('cartItems');
     if (storedIsLoggedIn) {
-      setIsLoggedIn(JSON.parse(storedIsLoggedIn));   
-    }
-    if (storedCartItems && JSON.parse(storedIsLoggedIn)) {
-      setCartItems(JSON.parse(storedCartItems));
+      setIsLoggedIn(JSON.parse(storedIsLoggedIn));
+      fetchCartItems().then(setCartItems);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    if (isLoggedIn) {
+      saveCartItems(cartItems); // Save cart items to the server
+    }
   }, [cartItems, isLoggedIn]);
 
   const handleSignOut = () => {
-    // Store the cart items before sign out
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
     localStorage.removeItem('isLoggedIn');
-    setCartItems([]);
     setIsLoggedIn(false);
     setRedirect(true); // Trigger redirection
   };
